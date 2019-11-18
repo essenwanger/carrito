@@ -60,3 +60,9 @@ package-lock.json
 
 # CocoaPods
 /ios/Pods/
+
+# GoogleService-Info.plist
+/ios/GoogleService-Info.plist
+
+# google-services.json
+/android/app/google-services.json
