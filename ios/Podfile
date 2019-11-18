@@ -51,6 +51,8 @@ target 'Carrito' do
   pod 'Firebase/Core', '~> 6.3.0'
   pod 'Firebase/Database', '~> 6.3.0'
 
+  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
+
 end
 
 post_install do |installer|
