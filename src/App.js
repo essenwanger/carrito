@@ -18,9 +18,9 @@ export default class App extends Component {
       <StyleProvider style={getTheme(ecommerce)}>
       <Router>
         <Stack key="root">
-          <Scene key="login" component={()=><LoginScene store={store} />} hideNavBar />
+          <Scene key="login" component={()=><LoginScene store={store} />} hideNavBar initial/>
           <Scene key="main" component={()=><MainScene store={store} />} hideNavBar />
-          <Scene key="camera" component={()=><CameraScene store={store} />} hideNavBar initial/>
+          <Scene key="camera" component={()=><CameraScene store={store} />} hideNavBar />
           <Scene key="maps" component={()=><MapsScene store={store} />} hideNavBar />
         </Stack>
       </Router>

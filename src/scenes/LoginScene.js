@@ -1,20 +1,45 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Scene, Router, Actions, Stack  } from 'react-native-router-flux';
+import { GoogleSignin, statusCodes } from 'react-native-google-signin';
 
 class LoginScene extends Component{
   
   constructor(props){
     super(props)
     this.store = this.props.store;
+    this.state = {
+      response: ''
+    };
     this.onPress = this.onPress.bind(this);
   }
 
-  onPress(){
-    this.store.dispatch({ type: 'NAME', data: 'Vic'});
+  async onPress(){
+    try {
+      const userInfo = await GoogleSignin.signIn();
+      this.setState({ response: 'Name ' + userInfo.user.name + ' Email ' + userInfo.user.email });
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (f.e. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
+    }
+   /*this.store.dispatch({ type: 'NAME', data: 'Vic'});
     this.store.dispatch({ type: 'EMAIL', data: 'essenwanger@gmail.com'});
-    Actions.main();
+    Actions.main();*/
   } 
+
+  componentDidMount () {
+    GoogleSignin.configure({
+      webClientId: '809867189620-f4riqe8decsm4iuknvoliceltbf69ikf.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+      //iosClientId: '<FROM DEVELOPER CONSOLE>', // [iOS] optional, if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
+    });
+  }
 
   render(){
     return (
@@ -33,6 +58,9 @@ class LoginScene extends Component{
               <Text style={styles.buttonTextGoogle}>Google Sign In</Text>
             </View>
           </TouchableOpacity>
+          <Text>
+          {this.state.response}
+          </Text>
         </View>
         <View style={styles.footer}>
           <Text style={{color: '#fff', fontSize: 15 }}>@ecommerce</Text>
