@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Scene, Router, Actions, Stack  } from 'react-native-router-flux';
 import { GoogleSignin, statusCodes } from 'react-native-google-signin';
+import { LoginManager, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 
 class LoginScene extends Component{
   
@@ -12,6 +13,7 @@ class LoginScene extends Component{
       response: ''
     };
     this.onPress = this.onPress.bind(this);
+    this.onPressFacebook = this.onPressFacebook.bind(this);
   }
 
   async onPress(){
@@ -29,9 +31,52 @@ class LoginScene extends Component{
         // some other error happened
       }
     }
+    //Pagar 20 soles a carlos chevere
    /*this.store.dispatch({ type: 'NAME', data: 'Vic'});
     this.store.dispatch({ type: 'EMAIL', data: 'essenwanger@gmail.com'});
     Actions.main();*/
+  } 
+
+  onPressFacebook(){
+    LoginManager.logInWithReadPermissions(['public_profile', 'email']).then(
+      function(result) {
+        if (result.isCancelled) {
+          this.setState({response: 'Login was cancelled'});
+        } else {
+         AccessToken.getCurrentAccessToken().then(
+            (data) => {
+              const responseCallback = ((error, result) => {
+                if (error) {
+                  this.setState({response: 'Error data' + error});
+                } else {
+                  this.setState({response: 'Name ' + result.name + ' Email ' + result.email});
+                }
+              })
+              const profileRequestParams = {
+                fields: {
+                  string: 'id, name, email, first_name, last_name, picture'
+                }
+              }
+              const profileRequestConfig = {
+                httpMethod: 'GET',
+                version: 'v2.5',
+                parameters: profileRequestParams,
+                accessToken: data.accessToken.toString()
+              }
+              const profileRequest = new GraphRequest(
+                '/me',
+                profileRequestConfig,
+                responseCallback,
+              )
+              new GraphRequestManager().addRequest(profileRequest).start();
+            }
+          )
+        }
+      }.bind(this),
+      function(error) {
+        this.setState({response: 'Login failed with error: ' + error});
+      }.bind(this)
+    );
   } 
 
   componentDidMount () {
@@ -48,7 +93,7 @@ class LoginScene extends Component{
           <Image source={require('./../assets/logo-plp.png')}/>
         </View>
         <View style={styles.body}>
-          <TouchableOpacity onPress={this.onPress}>
+          <TouchableOpacity onPress={this.onPressFacebook}>
             <View style={styles.buttonFacebook}>
               <Text style={styles.buttonTextFacebook}>Facebook Sign In</Text>
             </View>
