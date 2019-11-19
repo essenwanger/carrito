@@ -9,6 +9,7 @@ import CameraScene from './scenes/CameraScene'
 import MapsScene from './scenes/MapsScene'
 import FirebaseScene from './scenes/FirebaseScene'
 import WebViewScene from './scenes/WebViewScene'
+import AnimatedScene from './scenes/AnimatedScene'
 import carrito from './reducers';
 import { createStore } from 'redux';
 
@@ -25,7 +26,8 @@ export default class App extends Component {
           <Scene key="camera" component={()=><CameraScene store={store} />} hideNavBar />
           <Scene key="maps" component={()=><MapsScene store={store} />} hideNavBar />
           <Scene key="firebase" component={()=><FirebaseScene store={store} />} hideNavBar />
-          <Scene key="webview" component={()=><WebViewScene store={store} />} hideNavBar initial/>
+          <Scene key="webview" component={()=><WebViewScene store={store} />} hideNavBar />
+          <Scene key="animated" component={()=><AnimatedScene store={store} />} hideNavBar initial/>
         </Stack>
       </Router>
       </StyleProvider>
