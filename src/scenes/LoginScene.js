@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Scene, Router, Actions, Stack  } from 'react-native-router-flux';
 import { GoogleSignin, statusCodes } from 'react-native-google-signin';
 import { LoginManager, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
+import firebase from 'react-native-firebase';
 
 class LoginScene extends Component{
   
@@ -31,7 +32,6 @@ class LoginScene extends Component{
         // some other error happened
       }
     }
-    //Pagar 20 soles a carlos chevere
    /*this.store.dispatch({ type: 'NAME', data: 'Vic'});
     this.store.dispatch({ type: 'EMAIL', data: 'essenwanger@gmail.com'});
     Actions.main();*/

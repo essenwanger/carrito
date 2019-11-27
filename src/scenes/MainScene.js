@@ -68,6 +68,7 @@ class MainScene extends Component{
       <Container>
         <HeaderApp title={'E-Commerce'} cart />
         <Content>
+          <Text>{this.props.id}</Text>
           {productos}
         </Content>
       </Container>     
