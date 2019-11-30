@@ -84,6 +84,21 @@ class LoginScene extends Component{
       webClientId: '809867189620-f4riqe8decsm4iuknvoliceltbf69ikf.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
       //iosClientId: '<FROM DEVELOPER CONSOLE>', // [iOS] optional, if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
     });
+    firebase.messaging().requestPermission()
+    .then(() => {
+      // User has authorised  
+    })
+    .catch(error => {
+      // User has rejected permissions  
+    });
+    firebase.messaging().getToken().then(fcmToken => {
+      if (fcmToken) {
+        console.info('Hola')
+        console.info(fcmToken)
+      } else {
+      // user doesn't have a device token yet
+      }
+    });
   }
 
   render(){
