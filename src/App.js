@@ -30,12 +30,12 @@ export default class App extends Component {
   }
 
   componentDidMount(){
-    //firebase.links().getInitialLink().then(this.handleOpenURL)
-    //this.unsuscribe = firebase.links().onLink(this.handleOpenURL)
+    firebase.links().getInitialLink().then(this.handleOpenURL)
+    this.unsuscribe = firebase.links().onLink(this.handleOpenURL)
   }
 
   componentWillUnmount(){
-    //this.unsuscribe()
+    this.unsuscribe()
   }
 
   render() {
