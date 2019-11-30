@@ -38,7 +38,7 @@ class LoginScene extends Component{
   } 
 
   onPressFacebook(){
-    LoginManager.logInWithReadPermissions(['public_profile', 'email']).then(
+    LoginManager.logInWithPermissions(['public_profile', 'email']).then(
       function(result) {
         if (result.isCancelled) {
           this.setState({response: 'Login was cancelled'});
